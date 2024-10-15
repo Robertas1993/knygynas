@@ -26,7 +26,18 @@ class Biblioteka:
         else:
             print(f"Knyga '{knyga.pavadinimas}' nerasta!")
             
-            
+    def ieskoti_knygos(self, pavadinimas_arba_autorius):
+        rezultatai = []
+        pavadinimas_arba_autorius = pavadinimas_arba_autorius.lower()
+        for knyga in self.knygos:
+            if pavadinimas_arba_autorius in knyga.pavadinimas.lower() or pavadinimas_arba_autorius in knyga.autorius.lower():
+                rezultatai.append(knyga)
+        if len(rezultatai) == 1:
+            return rezultatai[0]
+        elif len(rezultatai) > 1:
+            return rezultatai
+        else:
+            return None
     def paskolinti_knyga(self, pavadinimas, vardas, pavarde):
         skaitytojas = self.rasti_skaitytoja(vardas, pavarde)
         if skaitytojas is None:
@@ -57,6 +68,25 @@ class Biblioteka:
                     skaitytojas.pasiimti_knyga(knyga)
         else:
             print(f"Knyga '{pavadinimas}' nerasta!")
+    def grazinti_knyga(self, pavadinimas, vardas, pavarde):
+        for knyga in self.knygos:
+            if knyga.pavadinimas == pavadinimas:
+                if knyga.pasiskolinta:
+                    knyga.pasiskolinta = False
+                    knyga.grazinimo_data = None
+                    knyga.skaitytojas = None
+                    skaitytojas = self.rasti_skaitytoja(vardas, pavarde)
+                    if skaitytojas:
+                        skaitytojas.pasiskolintos_knygos.remove(knyga)
+                        self.save_skaitytojai()
+                        print(f"Knyga '{knyga.pavadinimas}' grąžinta sėkmingai!")
+                    else:
+                        print(f"Skaitytojas '{vardas} {pavarde}' nerastas!")
+                else:
+                    print("Knyga nėra paskolinta.")
+                return
+
+        print(f"Knyga '{pavadinimas}' nerasta!")
 
     def rasti_skaitytoja(self, vardas, pavarde):
         for skaitytojas in self.skaitytojai:
@@ -118,3 +148,16 @@ class Biblioteka:
             print("Error pickling the data.")
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
+            
+    def rasti_skaitytojus_su_skolomis(self):
+        skaitytojai_su_skolomis = [skaitytojas for skaitytojas in self.skaitytojai if skaitytojas.pasiskolintos_knygos]
+        if skaitytojai_su_skolomis:
+            print("Skaitytojai su skolomis:")
+            for skaitytojas in skaitytojai_su_skolomis:
+                veluojancios_knygos = [knyga for knyga in skaitytojas.pasiskolintos_knygos if knyga.grazinimo_data and knyga.grazinimo_data < dt.date.today()]
+                if veluojancios_knygos:
+                    print(f"{skaitytojas.vardas} {skaitytojas.pavarde}:")
+                    for knyga in veluojancios_knygos:
+                        print(f"  - {knyga.pavadinimas} (veluoja grąžinti nuo {knyga.grazinimo_data})")
+        else:
+            print("Nėra skaitytojų su skolomis.")
