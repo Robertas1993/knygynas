@@ -44,6 +44,67 @@ def naudotojo_funkcija():
                 biblioteka.paskolinti_knyga(pavadinimas, vardas, pavarde)
             except Exception as e:
                 print(f"Klaida: {e}")
+        elif pasirinkimas == "5":
+            try:
+                print("Visos knygos:")
+                for i, knyga in enumerate(biblioteka.knygos, start=1):
+                    if knyga.pasiskolinta:
+                        skaitytojas = next((s for s in biblioteka.skaitytojai if knyga in s.pasiskolintos_knygos), None)
+                        if skaitytojas:
+                             print(f"{i}. Pavadinimas: {knyga.pavadinimas}, Autorius: {knyga.autorius}, Leidimo metai: {knyga.leidybos_metai}, Žanras: {knyga.zanras}, Pasiskolinta: {knyga.pasiskolinta}, Grazinimo data: {knyga.grazinimo_data}, Skaitytojas: {skaitytojas.vardas} {skaitytojas.pavarde}")
+                        else:
+                            print(f"{i}. Pavadinimas: {knyga.pavadinimas}, Autorius: {knyga.autorius}, Leidimo metai: {knyga.leidybos_metai}, Žanras: {knyga.zanras}, Pasiskolinta: {knyga.pasiskolinta}, Grazinimo data: {knyga.grazinimo_data}")
+                    else:
+                        print(f"{i}. Pavadinimas: {knyga.pavadinimas}, Autorius: {knyga.autorius}, Leidimo metai: {knyga.leidybos_metai}, Žanras: {knyga.zanras}, Pasiskolinta: {knyga.pasiskolinta}, Grazinimo data: {knyga.grazinimo_data}")
+            except Exception as e:
+                    print(f"Klaida: {e}")
+
+        elif pasirinkimas == "6":
+            try:
+                biblioteka.rasti_skaitytojus_su_skolomis()
+            except Exception as e:
+                print(f"Klaida: {e}")
+
+        elif pasirinkimas == "7":
+            try:
+                biblioteka.save_knygos()
+                biblioteka.save_skaitytojai()
+                print("Biblioteka uždaryta!")
+                break
+            except Exception as e:
+                print(f"Klaida: {e}")
+                
+        elif pasirinkimas == "8":
+            try:
+                print("Visi skaitytojai:")
+                for i, skaitytojas in enumerate(biblioteka.skaitytojai, start=1):
+                    print(f"{i}. Vardas: {skaitytojas.vardas}, Pavardė: {skaitytojas.pavarde}")
+                skaitytojo_numeris = int(input("Įveskite skaitytojo numerį, kurį norite ištrinti: "))
+                if skaitytojo_numeris > 0 and skaitytojo_numeris <= len(biblioteka.skaitytojai):
+                    skaitytojas = biblioteka.skaitytojai[skaitytojo_numeris - 1]
+                    print("Skaitytojas yra pasiskolintas šias knygas:")
+                    for knyga in skaitytojas.pasiskolintos_knygos:
+                        print(f"- {knyga.pavadinimas}")
+                    biblioteka.skaitytojai.remove(skaitytojas)
+                    biblioteka.save_skaitytojai()
+                    print(f"Skaitytojas '{skaitytojas.vardas} {skaitytojas.pavarde}' ištrintas sėkmingai!")
+                    for knyga in skaitytojas.pasiskolintos_knygos:
+                        knyga.pasiskolinta = False
+                        knyga.grazinimo_data = None
+                        biblioteka.save_knygos()
+                    print("Visos skolintos knygos ištrintos sėkmingai!")
+                else:
+                    print("Neteisingas skaitytojo numeris.")
+            except Exception as e:
+                print(f"Klaida: {e}")
+        elif pasirinkimas == "9":
+            try:
+                vardas = input("Įveskite skaitytojo vardą: ")
+                pavarde = input("Įveskite skaitytojo pavardę: ")
+                pavadinimas = input("Įveskite knygos pavadinimą, kurią norite grąžinti: ")
+                biblioteka.grazinti_knyga(pavadinimas, vardas, pavarde)
+            except Exception as e:
+                print(f"Klaida: {e}")
 
 
 naudotojo_funkcija()
