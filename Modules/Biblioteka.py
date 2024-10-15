@@ -3,8 +3,8 @@ Datos_vieta = r'C:\Users\Silver\knygynas\Data'
 
 import os
 import pickle
-from .knyga import Knyga
-from .skaitytojas import Skaitytojas
+from .knyga import *
+from .skaitytojas import *
 
 class Biblioteka:
     def __init__(self):
@@ -63,26 +63,58 @@ class Biblioteka:
             if skaitytojas.vardas == vardas and skaitytojas.pavarde == pavarde:
                 return skaitytojas
         return None
+
+
     def load_knygos(self):
         data_knygu = Datos_vieta + '\knygos.pkl'
-        if os.path.exists(data_knygu):
-            with open(data_knygu, 'rb') as f:
-                return pickle.load(f)
-        else:
+        try:
+            if os.path.exists(data_knygu):
+                with open(data_knygu, 'rb') as f:
+                    return pickle.load(f)
+            else:
+                return []
+        except FileNotFoundError:
+            print("The file was not found.")
+            return []
+        except pickle.UnpicklingError:
+            print("Error unpickling the file.")
+            return []
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
             return []
 
     def load_skaitytojai(self):
         data_skait = Datos_vieta + '\skaitytojai.pkl'
-        if os.path.exists(data_skait):
-            with open(data_skait, 'rb') as f:
-                return pickle.load(f)
-        else:
+        try:
+            if os.path.exists(data_skait):
+                with open(data_skait, 'rb') as f:
+                    return pickle.load(f)
+            else:
+                return None
+        except FileNotFoundError:
+            print("The file was not found.")
+            return None
+        except pickle.UnpicklingError:
+            print("Error unpickling the file.")
+            return None
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
             return None
 
     def save_knygos(self):
-        with open(Datos_vieta + '\knygos.pkl', 'wb') as f:
-            pickle.dump(self.knygos, f)
+        try:
+            with open(Datos_vieta + '\knygos.pkl', 'wb') as f:
+                pickle.dump(self.knygos, f)
+        except pickle.PicklingError:
+            print("Error pickling the data.")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
 
     def save_skaitytojai(self):
-        with open(Datos_vieta + '\skaitytojai.pkl', 'wb') as f:
-            pickle.dump(self.skaitytojai, f)
+        try:
+            with open(Datos_vieta + '\skaitytojai.pkl', 'wb') as f:
+                pickle.dump(self.skaitytojai, f)
+        except pickle.PicklingError:
+            print("Error pickling the data.")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")

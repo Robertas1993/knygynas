@@ -9,12 +9,9 @@ class Skaitytojas:
         self.pasiskolintos_knygos = []
 
     def pasiimti_knyga(self, knyga):
-            if len(self.pasiskolintos_knygos) < 5:
-                knyga.grazinimo_data = dt.date.today() + dt.timedelta(seconds=10)  
-                self.pasiskolintos_knygos.append(knyga)
-                print(f"{self.vardas} {self.pavarde} pasiėmė knygą '{knyga.pavadinimas}'")
-            else:
-                print(f"{self.vardas} {self.pavarde} jau turi {len(self.pasiskolintos_knygos)} virs limito ir negali pasiimti daugiau  knygų!")
+        self.pasiskolintos_knygos.append(knyga)
+        print(f"{self.vardas} {self.pavarde} pasiėmė knygą '{knyga.pavadinimas}'")
+
 
     def prideti_skaitytoja(self, vardas, pavarde):
         skaitytojas = Skaitytojas(vardas, pavarde)
