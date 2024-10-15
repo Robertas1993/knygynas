@@ -44,6 +44,22 @@ def naudotojo_funkcija():
                 biblioteka.paskolinti_knyga(pavadinimas, vardas, pavarde)
             except Exception as e:
                 print(f"Klaida: {e}")
+                
+        elif pasirinkimas == "4":
+                    try:
+                        pavadinimas_arba_autorius = input("Įveskite knygos pavadinimą arba autorių: ")
+                        rezultatai = biblioteka.ieskoti_knygos(pavadinimas_arba_autorius)
+                        if rezultatai is not None:
+                            if isinstance(rezultatai, list):
+                                for knyga in rezultatai:
+                                    print(knyga)
+                            else:
+                                print(rezultatai)
+                        else:
+                            print(f"Knyga '{pavadinimas_arba_autorius}' nerasta!")
+                    except Exception as e:
+                        print(f"Klaida: {e}")
+
         elif pasirinkimas == "5":
             try:
                 print("Visos knygos:")
