@@ -23,4 +23,4 @@ Susidūriau su problema importuojant modulius savo Python projekte. Nepaisant da
 
 Pypi.org linkas ikelta, visas pasileidimas  i viena... 
 
-https://pypi.org/project/meginam-ats/
+https://pypi.org/project/knygynas/
