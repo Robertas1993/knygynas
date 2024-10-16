@@ -21,6 +21,6 @@ Atitinka visas instrukcijas ir būtinas sąlygas.
 Susidūriau su problema importuojant modulius savo Python projekte. Nepaisant daugybės bandymų – modifikavau sys.path, naudojau tiek tiesioginius, tiek paprastus importus 
 
 
-Pypi.org linkas ikelta, visas pasileidimas  i viena... 
+Pypi.org alternatyvus linkas parsisiusti:
 
 https://pypi.org/project/knygynas/
