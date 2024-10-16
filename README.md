@@ -17,3 +17,10 @@ Atitinka visas instrukcijas ir būtinas sąlygas.
 +Bonus naudota poetry+ dar kelias ekstra funkcijas padariau.
 
 Šios funkcijos padeda valdyti bibliotekos veiklą efektyviau.
+
+Susidūriau su problema importuojant modulius savo Python projekte. Nepaisant daugybės bandymų – modifikavau sys.path, naudojau tiek tiesioginius, tiek paprastus importus 
+
+
+Pypi.org linkas ikelta, visas pasileidimas  i viena... 
+
+https://pypi.org/project/meginam-ats/

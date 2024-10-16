@@ -1,11 +1,13 @@
 
 # import sys
 
-# sys.path.insert(0, r'C:\Users\Silver\knygynas\Biblioteka')
 
-from Biblioteka import Biblioteka
 
-# from Biblioteka import Biblioteka
+from .Biblioteka import *
+
+# import Biblioteka
+# import .Biblioteka
+# from Biblioteka import *
 
 
 def naudotojo_funkcija():

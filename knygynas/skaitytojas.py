@@ -1,5 +1,5 @@
-from .knyga import Knyga
-from .Biblioteka import Biblioteka
+from  .knyga import *
+from  .Biblioteka import *
 
 class Skaitytojas:
     def __init__(self, vardas, pavarde):

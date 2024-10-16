@@ -1,7 +1,7 @@
 import os
 import pickle
-from .knyga import Knyga, dt
-from .skaitytojas import Skaitytojas
+from .knyga import   *
+from  .skaitytojas import *
 
 
 class Biblioteka:
