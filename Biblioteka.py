@@ -1,10 +1,8 @@
-
-Datos_vieta = r'C:\Users\Silver\knygynas\Data'
-
 import os
 import pickle
-from .knyga import *
-from .skaitytojas import *
+from .knyga import Knyga, dt
+from .skaitytojas import Skaitytojas
+
 
 class Biblioteka:
     def __init__(self):
@@ -12,20 +10,37 @@ class Biblioteka:
         self.skaitytojai = self.load_skaitytojai()
         if self.skaitytojai is None:
             self.skaitytojai = []
+            
+            
+
+
+    def load_knygos(self):
+        try:
+            with open("knygos.pkl", "rb") as f:
+                return pickle.load(f)
+        except FileNotFoundError:
+            return []
+
+    def load_skaitytojai(self):
+        try:
+            with open("skaitytojai.pkl", "rb") as f:
+                return pickle.load(f)
+        except FileNotFoundError:
+            return []
+
+    def save_knygos(self):
+        with open("knygos.pkl", "wb") as f:
+            pickle.dump(self.knygos, f)
+
+    def save_skaitytojai(self):
+        with open("skaitytojai.pkl", "wb") as f:
+            pickle.dump(self.skaitytojai, f)
 
     def prideti_knyga(self, knyga):
         self.knygos.append(knyga)
         self.save_knygos()
         print(f"Knyga '{knyga.pavadinimas}' įtraukta sėkmingai!")
-        
-    def istrinti_knyga(self, knyga):
-        if knyga in self.knygos:
-            self.knygos.remove(knyga)
-            self.save_knygos()
-            print(f"Knyga '{knyga.pavadinimas}' pašalinta sėkmingai!")
-        else:
-            print(f"Knyga '{knyga.pavadinimas}' nerasta!")
-            
+
     def ieskoti_knygos(self, pavadinimas_arba_autorius):
         rezultatai = []
         pavadinimas_arba_autorius = pavadinimas_arba_autorius.lower()
@@ -38,6 +53,20 @@ class Biblioteka:
             return rezultatai
         else:
             return None
+
+    def istrinti_knyga(self, knyga):
+        if knyga in self.knygos:
+            self.knygos.remove(knyga)
+            self.save_knygos()
+            print(f"Knyga '{knyga.pavadinimas}' pašalinta sėkmingai!")
+        else:
+            print(f"Knyga '{knyga.pavadinimas}' nerasta!")
+
+    def rasti_knyga(self, pavadinimas):
+        for knyga in self.knygos:
+            if knyga.pavadinimas == pavadinimas:
+                return knyga
+        return None
     def paskolinti_knyga(self, pavadinimas, vardas, pavarde):
         skaitytojas = self.rasti_skaitytoja(vardas, pavarde)
         if skaitytojas is None:
@@ -94,61 +123,6 @@ class Biblioteka:
                 return skaitytojas
         return None
 
-
-    def load_knygos(self):
-        data_knygu = Datos_vieta + '\knygos.pkl'
-        try:
-            if os.path.exists(data_knygu):
-                with open(data_knygu, 'rb') as f:
-                    return pickle.load(f)
-            else:
-                return []
-        except FileNotFoundError:
-            print("The file was not found.")
-            return []
-        except pickle.UnpicklingError:
-            print("Error unpickling the file.")
-            return []
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
-            return []
-
-    def load_skaitytojai(self):
-        data_skait = Datos_vieta + '\skaitytojai.pkl'
-        try:
-            if os.path.exists(data_skait):
-                with open(data_skait, 'rb') as f:
-                    return pickle.load(f)
-            else:
-                return None
-        except FileNotFoundError:
-            print("The file was not found.")
-            return None
-        except pickle.UnpicklingError:
-            print("Error unpickling the file.")
-            return None
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
-            return None
-
-    def save_knygos(self):
-        try:
-            with open(Datos_vieta + '\knygos.pkl', 'wb') as f:
-                pickle.dump(self.knygos, f)
-        except pickle.PicklingError:
-            print("Error pickling the data.")
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
-
-    def save_skaitytojai(self):
-        try:
-            with open(Datos_vieta + '\skaitytojai.pkl', 'wb') as f:
-                pickle.dump(self.skaitytojai, f)
-        except pickle.PicklingError:
-            print("Error pickling the data.")
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
-            
     def rasti_skaitytojus_su_skolomis(self):
         skaitytojai_su_skolomis = [skaitytojas for skaitytojas in self.skaitytojai if skaitytojas.pasiskolintos_knygos]
         if skaitytojai_su_skolomis:

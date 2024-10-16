@@ -1,5 +1,6 @@
-from .knyga import Knyga, dt
+from .knyga import Knyga
 from .Biblioteka import Biblioteka
+
 class Skaitytojas:
     def __init__(self, vardas, pavarde):
         if not vardas or not pavarde:
@@ -8,9 +9,13 @@ class Skaitytojas:
         self.pavarde = pavarde
         self.pasiskolintos_knygos = []
 
+
+            
     def pasiimti_knyga(self, knyga):
         self.pasiskolintos_knygos.append(knyga)
-        print(f"{self.vardas} {self.pavarde} pasiėmė knygą '{knyga.pavadinimas}'")
+        print ("Knyga paiimta sekmingai!")
+
+
 
 
     def prideti_skaitytoja(self, vardas, pavarde):

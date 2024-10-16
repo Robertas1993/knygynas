@@ -1,7 +1,15 @@
-from Modules.Biblioteka import *
+
+# import sys
+
+# sys.path.insert(0, r'C:\Users\Silver\knygynas\Biblioteka')
+
+from Biblioteka import Biblioteka
+
+# from Biblioteka import Biblioteka
+
+
 def naudotojo_funkcija():
-            
-    biblioteka = Biblioteka()
+    biblioteka = Biblioteka()       
     while True:
         print("Bibliotekos valdymo sistema")
         print("1. Įtraukti knygą")
@@ -99,12 +107,12 @@ def naudotojo_funkcija():
                 print(f"Klaida: {e}")
         elif pasirinkimas == "9":
             try:
-                vardas = input("Įveskite skaitytojo vardą: ")
-                pavarde = input("Įveskite skaitytojo pavardę: ")
-                pavadinimas = input("Įveskite knygos pavadinimą, kurią norite grąžinti: ")
-                biblioteka.grazinti_knyga(pavadinimas, vardas, pavarde)
+                biblioteka.save_knygos()
+                biblioteka.save_skaitytojai()
+                print("Biblioteka uždaryta!")
+                break
             except Exception as e:
-                print(f"Klaida: {e}")
+                 print(f"Klaida: {e}")
 
-
+            
 naudotojo_funkcija()

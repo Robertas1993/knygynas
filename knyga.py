@@ -1,6 +1,5 @@
+
 import datetime as dt
-from .Biblioteka import *
-from .skaitytojas import *
 
 class Knyga:
     def __init__(self, pavadinimas, autorius, leidybos_metai, zanras):
