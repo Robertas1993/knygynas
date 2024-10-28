@@ -2,8 +2,6 @@ import os
 import pickle
 from .knyga import   *
 from  .skaitytojas import *
-
-
 class Biblioteka:
     def __init__(self):
         self.knygos = self.load_knygos()
@@ -67,6 +65,7 @@ class Biblioteka:
             if knyga.pavadinimas == pavadinimas:
                 return knyga
         return None
+    
     def paskolinti_knyga(self, pavadinimas, vardas, pavarde):
         skaitytojas = self.rasti_skaitytoja(vardas, pavarde)
         if skaitytojas is None:
@@ -74,8 +73,7 @@ class Biblioteka:
             self.skaitytojai.append(skaitytojas)
             self.save_skaitytojai()
             print(f"Skaitytojas '{vardas} {pavarde}' pridėtas sėkmingai!")
-
-        knyga = self.ieskoti_knygos(pavadinimas)
+            knyga = self.ieskoti_knygos(pavadinimas)
         if knyga is not None:
             if isinstance(knyga, list):
                 if len(knyga) == 1:
@@ -135,3 +133,4 @@ class Biblioteka:
                         print(f"  - {knyga.pavadinimas} (veluoja grąžinti nuo {knyga.grazinimo_data})")
         else:
             print("Nėra skaitytojų su skolomis.")
+
